@@ -10,7 +10,7 @@ export function useLocalStorage<T>({
   initialValue,
 }: localStorageProps<T>) {
   // ! the "!" is a non-null assertion operator stringWord variable is never null or undefined
-  // ! its always an empty []
+  // ! its always an empty initialValue ([], str ...)
   // 1st render ==> get items
   const [storedValue, setStoredValue] = useState<T>(() => {
     const savedData = localStorage.getItem(key) as string;

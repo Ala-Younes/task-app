@@ -9,7 +9,7 @@ const TaskItem = ({ task, onDelete, onEdit }: Props) => {
   const { name, time, id } = task;
 
   return (
-    <li className="w-full md:max-w-[48%] lg:max-w-[31%] shadow-xl flex justify-between px-3 bg-white rounded-lg py-2 border-l-4 border-l-cyan-500 hover:bg-slate-100 transition-all duration-200">
+    <li className="w-full md:max-w-[48%] lg:max-w-[31%] shadow-xl flex justify-between px-3 bg-white rounded-lg py-2 border-l-4 dark:border-l-red-500 border-l-cyan-500 hover:bg-slate-100 transition-all duration-200">
       <div className="flex flex-col gap-2">
         <h3 className="font-bold">{name}</h3>
         <p className="text-slate-500">{time}</p>

@@ -5,10 +5,12 @@ import Header from "./components/Header";
 import TaskList from "./components/TaskList";
 import Task from "./models/Task";
 import EditTask from "./components/EditTask";
+import useTheme from "./hooks/useTheme";
+import useTask from "./hooks/useTask";
 
 function App() {
-  // ! State lives on the first parent element
-  const [taskList, setTaskList] = useState<Task[]>([]);
+  const { activeTheme, handleThemeChange } = useTheme("gray");
+  const { taskList, addTask, deleteTask, editTask, clearTasks } = useTask();
   const [editMode, setEditMode] = useState<"add" | "edit">("add");
   const [taskToEdit, setTaskToEdit] = useState<Task | null>(null);
 
@@ -16,54 +18,24 @@ function App() {
     setTaskToEdit(null);
     setEditMode("add");
   };
-  // TODO A hook for CRUD
+
   const handleTaskDelete = (id: number) => {
-    setTaskList((previousTasks) =>
-      previousTasks.filter((task) => task.id !== id)
-    );
+    deleteTask(id);
     resetForm();
   };
 
-  const createTask = (date: Date, taskName: string) => {
-    return {
-      id: date.getTime(),
-      name: taskName,
-      time: `${date.toLocaleTimeString()} ${date.toLocaleDateString()}`,
-    };
-  };
-
   const handleTaskAdd = (taskName: string) => {
-    if (!taskName) return;
-
-    const createdTask = createTask(new Date(), taskName);
-
-    setTaskList((prevTaskList) => [...prevTaskList, createdTask]);
-
+    addTask(taskName);
     resetForm();
   };
 
   const handleTaskEdit = (taskName: string) => {
-    const selectedTask = taskList.find((t) => t.id === taskToEdit?.id);
-    if (!taskName || !selectedTask) return "Undefined task";
-
-    const editedTask = {
-      id: selectedTask.id,
-      name: taskName,
-      time: selectedTask.time,
-    };
-
-    setTaskList((prevTaskList) => {
-      return prevTaskList.map((t) =>
-        t.id === selectedTask.id ? editedTask : t
-      );
-    });
-
-    setEditMode("add");
-    setTaskToEdit(null);
+    editTask(taskToEdit?.id, taskName);
+    resetForm();
   };
 
   const handleTasksClear = () => {
-    setTaskList([]);
+    clearTasks();
     resetForm();
   };
 
@@ -73,19 +45,22 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen mx-auto max-w-6xl rounded-lg">
-      <Header />
-      {editMode === "add" ? (
-        <AddTask onAdd={handleTaskAdd} />
-      ) : (
-        <EditTask onEdit={handleTaskEdit} task={taskToEdit!} />
-      )}
-      <TaskList
-        onDelete={handleTaskDelete}
-        onEdit={handleEditClick}
-        taskList={taskList}
-        onClear={handleTasksClear}
-      />
+    // ! Work around to apply bg-dark on all the h-screen
+    <div className={`${activeTheme} bg-black`}>
+      <div className={`h-screen mx-auto max-w-6xl py-16 dark:bg-black`}>
+        <Header onThemeChange={handleThemeChange} />
+        {editMode === "add" ? (
+          <AddTask onAdd={handleTaskAdd} />
+        ) : (
+          <EditTask onEdit={handleTaskEdit} task={taskToEdit!} />
+        )}
+        <TaskList
+          onDelete={handleTaskDelete}
+          onEdit={handleEditClick}
+          taskList={taskList}
+          onClear={handleTasksClear}
+        />
+      </div>
     </div>
   );
 }

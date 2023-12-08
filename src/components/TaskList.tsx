@@ -9,7 +9,7 @@ type Props = {
 
 const TaskList = ({ onClear, onDelete, onEdit, taskList }: Props) => {
   return (
-    <section className="container mx-auto mt-12 p-4 bg-slate-200 shadow-2xl rounded-lg">
+    <section className="container mx-auto mt-12 p-4 bg-slate-200 shadow-2xl rounded-lg dark:bg-white dark:text-black">
       <div className="flex justify-between p-2">
         <div className="flex gap-4 items-center">
           <span>Todo</span>

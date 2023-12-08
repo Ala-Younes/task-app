@@ -25,10 +25,10 @@ const AddTask = ({ onAdd }: Props) => {
     <section className="flex justify-center items-center mt-16">
       <form
         onSubmit={handleSubmit}
-        className="flex gap-6 p-6 bg-slate-200 shadow-2xl rounded-lg"
+        className="flex gap-6 p-6 bg-slate-200 shadow-2xl rounded-lg dark:bg-white dark:text-black"
       >
         <input
-          className="rounded border border-slate-400 text-slate-600 text-center placeholder:text-slate-400 focus:outline-none focus:border-slate-800"
+          className="rounded border border-slate-400 text-slate-600 text-center placeholder:text-slate-400 focus:outline-none focus:border-slate-800 dark:border-black dark:text-black dark:placeholder:text-black placeholder:opacity-60"
           type="text"
           name="taskName"
           autoComplete="off"

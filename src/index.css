@@ -19,10 +19,6 @@
   list-style: none;
 }
 
-body {
-  @apply bg-slate-400;
-}
-
 .gradientOne {
   background: linear-gradient(
     90deg,
